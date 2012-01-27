@@ -110,12 +110,28 @@
         (from-entity-cast-many (.getAll service key-or-keys))
         (from-entity-cast (.get service key-or-keys)))))
 
-
 (defn put! [key value & {:keys [namespace expiration policy]
                          :or {policy :always}}]
   (let [service (get-memcache-service :namespace namespace)
         policy (*policy-type-map* policy)]
     (.put service key (to-entity-cast value) expiration policy)))
+
+(defn gets
+  "Like get (with single key) but can be used in subsequent cas"
+  [key-or-keys & {:keys [namespace]}]
+  (let [service (get-memcache-service :namespace namespace)]
+    (if (sequential? key-or-keys)
+        (throw (IllegalArgumentException. "only works with single key for now"))
+        (from-entity-cast (.getIdentifiable service key-or-keys)))))
+
+(defn cas! 
+  "Compare and Swap, old-value must be read with gets
+  returns true if value was stored, false otherwise"
+  [key old-value value & {:keys [namespace expiration policy]
+                         :or {policy :always}}]
+  (let [service (get-memcache-service :namespace namespace)
+        policy (*policy-type-map* policy)]
+    (.putIfUntouched service key (to-entity-cast old-value) (to-entity-cast value) expiration)))
 
 
 (defn put-map! [values & {:keys [namespace expiration policy]
