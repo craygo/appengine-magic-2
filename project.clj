@@ -1,10 +1,10 @@
-(defproject appengine-magic "0.4.6-wt"
+(defproject appengine-magic "0.4.7-wt"
   :description "Google App Engine library for Clojure."
   :min-lein-version "1.6.1"
 ;  :repositories {"releases" "http://appengine-magic-mvn.googlecode.com/svn/releases/"
 ;                 "snapshots" "http://appengine-magic-mvn.googlecode.com/svn/snapshots/"}
   :exclusions [org.clojure/clojure]
-  :dependencies [[ring/ring-core "0.3.11"]
+  :dependencies [[ring/ring-core "1.0.2"]
                  [org.apache.commons/commons-exec "1.1"]
                  ;; App Engine supporting essentials
                  [javax.servlet/servlet-api "2.5"]
@@ -18,15 +18,16 @@
                  [taglibs/standard "1.1.2"] ; repackaged-appengine-jakarta-standard-1.1.2.jar
                  [commons-el "1.0"]
                  ;; main App Engine libraries
-                 [com.google.appengine/appengine-api-1.0-sdk "1.5.4"]
-                 [com.google.appengine/appengine-api-labs "1.5.4"]
-                 [com.google.appengine/appengine-api-stubs "1.5.4"]
-                 [com.google.appengine/appengine-local-runtime "1.5.4"]
-                 [com.google.appengine/appengine-local-runtime-shared "1.5.4"]
-                 [com.google.appengine/appengine-testing "1.5.4"]
-                 [com.google.appengine/appengine-tools-api "1.5.4"]]
+                 [com.google.appengine/appengine-api-1.0-sdk "1.6.3"]
+                 [com.google.appengine/appengine-api-labs "1.6.3"]
+                 [com.google.appengine/appengine-api-stubs "1.6.3"]
+                 [com.google.appengine/appengine-local-runtime "1.6.3"]
+                 [com.google.appengine/appengine-local-runtime-shared "1.6.3"]
+                 [com.google.appengine/appengine-testing "1.6.3"]
+                 [com.google.appengine/appengine-tools-api "1.6.3"]]
   :dev-dependencies [[org.clojure/clojure "1.3.0"]
-                     [swank-clojure "1.3.3"]]
+                     ;[swank-clojure "1.4.0"]
+                     ]
 
   :repositories {"snapshots" {:url "http://nexus.whoto.com/nexus/content/repositories/snapshots/"
                               :username "deployment" :password "deployment123"}
