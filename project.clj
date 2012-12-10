@@ -1,4 +1,4 @@
-(defproject appengine-magic "0.5.0-wt"
+(defproject appengine-magic "0.6.0-wt"
   :description "Google App Engine library for Clojure."
   :min-lein-version "1.7.0"
 ;  :repositories {"releases" "http://appengine-magic-mvn.googlecode.com/svn/releases/"
@@ -18,18 +18,18 @@
                  [taglibs/standard "1.1.2"] ; repackaged-appengine-jakarta-standard-1.1.2.jar
                  [commons-el "1.0"]
                  ;; main App Engine libraries
-                 [com.google.appengine/appengine-api-1.0-sdk "1.6.3.1"]
-                 [com.google.appengine/appengine-api-labs "1.6.3.1"]
-                 [com.google.appengine/appengine-api-stubs "1.6.3.1"]
-                 [com.google.appengine/appengine-local-runtime "1.6.3.1"]
-                 [com.google.appengine/appengine-local-runtime-shared "1.6.3.1"]
-                 [com.google.appengine/appengine-testing "1.6.3.1"]
-                 [com.google.appengine/appengine-tools-api "1.6.3.1"]]
+                 [com.google.appengine/appengine-api-1.0-sdk "1.7.3"]
+                 [com.google.appengine/appengine-api-labs "1.7.3"]
+                 [com.google.appengine/appengine-api-stubs "1.7.3"]
+                 [com.google.appengine/appengine-local-runtime "1.7.3"]
+                 [com.google.appengine/appengine-local-runtime-shared "1.7.3"]
+                 [com.google.appengine/appengine-testing "1.7.3"]
+                 [com.google.appengine/appengine-tools-api "1.7.3"]]
   :dev-dependencies [[org.clojure/clojure "1.3.0"]
                      ;[swank-clojure "1.4.0"]
                      ]
-  :repositories {"snapshots" {:url "http://nexus.whoto.com/nexus/content/repositories/snapshots/"
-                              :username "deployment" :password "deployment123"}
-                 "releases"  {:url "http://nexus.whoto.com/nexus/content/repositories/releases/"
-                              :username "deployment" :password "deployment123"}}
+;  :repositories {"snapshots" {:url "http://nexus.whoto.com/nexus/content/repositories/snapshots/"
+;                              :username "deployment" :password "deployment123"}
+;                 "releases"  {:url "http://nexus.whoto.com/nexus/content/repositories/releases/"
+;                              :username "deployment" :password "deployment123"}}
  )
