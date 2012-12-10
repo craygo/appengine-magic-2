@@ -7,7 +7,8 @@
             Key KeyFactory
             Entity
             FetchOptions$Builder
-            Query Query$FilterOperator Query$SortDirection]
+            Query Query$FilterOperator Query$SortDirection
+            TransactionOptions TransactionOptions$Builder]
            ;; types
            [com.google.appengine.api.datastore Blob ShortBlob Text Link]
            com.google.appengine.api.blobstore.BlobKey))
@@ -491,6 +492,16 @@
          (do (.rollback *current-transaction*)
              (throw err#))))))
 
+(defmacro with-xg-transaction [& body]
+  `(binding [*current-transaction* (.beginTransaction (get-datastore-service) 
+                                                      (TransactionOptions$Builder/withXG true))]
+     (try
+       (let [body-result# (do ~@body)]
+         (.commit *current-transaction*)
+         body-result#)
+       (catch Throwable err#
+         (do (.rollback *current-transaction*)
+             (throw err#))))))
 
 (defn query-helper [kind ancestor filters sorts keys-only?
                     count-only? in-transaction?

@@ -12,6 +12,7 @@
 
 (defonce ^{:dynamic true} *current-server-port* (atom nil))
 
+(defonce environment-attributes (atom (java.util.concurrent.ConcurrentHashMap.)))
 
 (defn make-thread-environment-proxy [& {:keys [user-email user-admin?]}]
   (proxy [ApiProxy$Environment] []
@@ -19,14 +20,17 @@
     (getAuthDomain [] "")
     (getRequestNamespace [] "")
     (getDefaultNamespace [] "")
-    (getAttributes [] (java.util.HashMap.))
+    (getAttributes [] 
+      (do ;(prn "attr 1" (Integer/toHexString (System/identityHashCode @environment-attributes))
+          ;     (.keySet @environment-attributes))
+        @environment-attributes)) ;(java.util.HashMap.))
     (getEmail [] (or user-email ""))
     (isAdmin [] (or (Boolean/parseBoolean user-admin?) false))
     (getAppId [] @*current-app-id*)
     (getVersionId [] @*current-app-version*)))
 
 
-(defn appengine-init [#^File dir, port]
+(defn appengine-init [#^File dir, port high-replication in-memory]
   (let [appengine-web-file (File. dir "WEB-INF/appengine-web.xml")
         application-id (if (.exists appengine-web-file)
                            (first (xpath-value appengine-web-file "//application"))
@@ -47,6 +51,12 @@
     (reset! *current-app-id* application-id)
     (reset! *current-app-version* application-version)
     (reset! *current-server-port* port)
+
+    ;; Set datastore properties for optional features
+    (.setProperty api-proxy "datastore.no_storage" (str in-memory))
+    (if high-replication
+      (.setProperty api-proxy "datastore.default_high_rep_job_policy_unapplied_job_pct" "20"))
+
     (ApiProxy/setDelegate api-proxy)
     ;; This installs a thread environment onto the REPL thread and allows App
     ;; Engine API calls to work in the REPL.
